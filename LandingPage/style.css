@@ -1,0 +1,170 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(255, 255, 255);
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content:center;
+}
+
+nav li {
+    margin-right: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.heading {
+    font-size: 25px;
+    margin-right: 20px;
+    text-align: left;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+nav{
+    display: inline;
+}
+
+
+
+.hero h1 {
+    font-size: 48px;
+    color:rgb(65, 27, 3);
+    padding-bottom: 10px;
+    text-align: left;
+    
+}
+
+.hero button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+
+
+
+/* CSS */
+.hero {
+    
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #090909;
+}
+
+.hero h1, .hero .info, .hero button {
+    margin-bottom: 20px;
+}
+
+.image {
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-top: 20px;
+    float: right;
+}
+
+.hero > * {
+    flex-basis: 100%;
+}
+
+.image {
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.info {
+    margin-right: 100px;
+    padding-bottom: 30px;
+    font-size: 18px;
+}
+
+.about {
+    padding: 20px;
+}
+
+.services {
+    padding: 20px;
+}
+
+.services ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.services li {
+    margin: 20px;
+    width: 30%;
+}
+
+.services i {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.contact {
+    padding: 20px;
+}
+
+.contact form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact label {
+    margin-bottom: 10px;
+}
+
+.contact input,.contact textarea {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #161111;
+    background-color: #b0abab;
+}
+
+.contact input[type="submit"] {
+    background-color: #333;
+    color: #f8f5f5;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
