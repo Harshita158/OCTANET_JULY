@@ -1,4 +1,4 @@
-# OCTANET_JULY
+# Web Development
 Task 1
 Landing page
 <br>
