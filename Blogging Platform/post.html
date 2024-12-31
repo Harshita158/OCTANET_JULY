@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Blog Posts</title>
+  <style>
+
+    .blog-post {
+      background-color: rgb(134, 173, 173); 
+      border: 1px solid #ddd; 
+      border-radius: 8px; 
+      padding: 16px;
+      margin-bottom: 16px; 
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    }
+  
+    .blog-post h3 {
+      margin-top: 0; 
+      color: #333; 
+    }
+  
+    .blog-post p {
+      color: #555; 
+    }
+  
+    .delete-button {
+      background-color: #ff4d4d; 
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  
+    .delete-button:hover {
+      background-color: #ff1a1a; 
+    }
+  </style>
+  
+</head>
+<body class="post">
+  <div class="container">
+    <h1>Blog Posts</h1>
+
+    <div class="add-post">
+      <h2>Add a New Post</h2>
+      <form id="postForm">
+        <input type="text" id="title" name="title" placeholder="Title" required>
+        <textarea id="content" name="content" placeholder="Content" required></textarea>
+        <button type="submit">Add Post</button>
+      </form>
+    </div>
+
+    <div class="view-posts">
+      <h2>View Saved Blog Posts</h2>
+      <div class="blog-posts" id="blog-posts">
+        <!-- Blog posts will be inserted here by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Fetch posts and render them
+    async function fetchPosts() {
+      try {
+        const response = await fetch('/view-blog-posts');
+        if (!response.ok) throw new Error('Network response was not ok');
+        const posts = await response.json();
+        const postsContainer = document.getElementById('blog-posts');
+        postsContainer.innerHTML = '';
+
+        // Check if there are no posts
+        if (posts.length === 0) {
+          postsContainer.innerHTML = '<p>No posts yet. Create your first post!</p>';
+        } else {
+          posts.forEach(post => {
+            const postDiv = document.createElement('div');
+            postDiv.className = 'blog-post';
+            postDiv.innerHTML = `
+              <h3>${post.title}</h3>
+              <p>${post.content}</p>
+              <button class="delete-button" data-id="${post.id}">Delete</button>
+            `;
+            postsContainer.appendChild(postDiv);
+          });
+
+          // Add event listeners for delete buttons
+          document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', async function() {
+              const postId = this.getAttribute('data-id');
+              await deletePost(postId);
+            });
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching posts:', err);
+      }
+    }
+
+    // Handle post deletion
+    async function deletePost(postId) {
+      try {
+        const response = await fetch(`/delete-post/${postId}`, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          fetchPosts(); // Refresh the posts after deletion
+        } else {
+          console.error('Error deleting post:', await response.text());
+        }
+      } catch (err) {
+        console.error('Error during delete operation:', err);
+      }
+    }
+
+    // Handle form submission
+    document.getElementById('postForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const title = document.getElementById('title').value;
+      const content = document.getElementById('content').value;
+
+      try {
+        const response = await fetch('/add-post', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ title, content }),
+        });
+
+        if (response.ok) {
+          document.getElementById('title').value = '';
+          document.getElementById('content').value = '';
+          fetchPosts(); // Refresh the posts after adding a new one
+        } else {
+          console.error('Error adding post:', await response.text());
+        }
+      } catch (err) {
+        console.error('Error during form submission:', err);
+      }
+    });
+
+    // Initial fetch to display posts
+    fetchPosts();
+  </script>
+</body>
+</html>
